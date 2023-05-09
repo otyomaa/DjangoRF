@@ -1,31 +1,47 @@
-Разработать веб-приложение на основе Django Rest Framework (DRF) с использованием двух моделей, сериализаторов, сортировки, поиска по полям, пагинации и созданием Эндпоинта для получения комбинированных данных двух моделей
+# DjangoRF
 
-Описание задачи:
+DjangoRF is a simple REST API that allows users to manage articles, authors, and categories. The API is built with Django and the Django REST Framework.
 
-Создать Django-проект и настроить DRF.
-Создать две модели:
+# Installation
+To use DjangoRF, follow these steps:
 
-Модель A: заметки (Notes)
+### Clone the repository:
 
-ID
-Название (Title, строка)
-Текст (Text, текстовое поле)
-Дата создания (Created At, дата и время)
+`git clone https://github.com/otyomaa/DjangoRF.git`
 
-Модель B: Теги (Tags)
+### Install the dependencies:
 
-ID
-Имя тега (Tag Name, строка)
-Описание (Description, текстовое поле)
+`pip install -r requirements.txt`
 
-Установить связь ManyToManу между Заметками и Тегами. Создать сериализаторы для каждой из моделей.
+### Apply the migrations:
 
-Настроить представления (Views) и маршруты (Urls) для следующих операций:
+`python manage.py migrate`
 
-Получение списка заметок и тегов
+### Create a superuser:
 
-Получение, создание, редактирование и удаление отдельной заметки или тега Добавить сортировку по полям для обеих моделей (например, сортировка заметок по дате создания и сортировка тегов по имени).
+`python manage.py createsuperuser`
 
-Реализовать поиск по полям моделей (например, поиск заметок по названию поиск тегов по имени). Настроить пагинацию для слиска заметок и списка тегов.
+### Run the server:
 
-Создать Эндпоинт, который будет возврацать комбинированные данные заметок и тегов. Например, вернуть список заметок с информацией о связанных тегах и список тегов с информацией о связанных заметках
+`python manage.py runserver`
+
+## Usage
+Once the server is running, you can access the API at http://localhost:8000/api/. The API endpoints are:
+
+http://localhost:8000/notes/: allows you to list, create, and update notes.
+http://localhost:8000/tags/: allows you to list, create, and update tags.
+To access the endpoints that require authentication, you will need to use a client that supports authentication, such as curl or httpie. To authenticate, send a POST request to http://localhost:8000/token/ with your username and password in the request body. You will receive a JSON response with an access token. Include this token in the Authorization header of your subsequent requests.
+
+For example, to create a new article, you can send a POST request to http://localhost:8000/notes/ with the following JSON payload:
+`
+{
+    "title": "My Article",
+    "content": "Lorem ipsum...",
+    "author": 1,
+    "categories": [1, 2]
+}
+`
+Replace 1 with the ID of the author you want to associate with the article, and 1 and 2 with the IDs of the categories you want to associate with the article. Include your access token in the Authorization header of the request.
+
+License
+DjangoRF is licensed under the MIT License. See LICENSE for more information.
